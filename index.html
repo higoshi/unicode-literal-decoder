@@ -1,31 +1,51 @@
 <!doctype html>
 <head>
   <style rel='text/stylesheet'>
-    #source {
-      width: 100%;
-      height: 300px;
+    div[v-cloak] {
+      visibility: hidden;
     }
-    #result {
-      width: 100%;
-      height: 300px;
+    .el-row {
+      margin-bottom: 20px;
     }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.11/theme-chalk/index.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/element-ui/2.4.11/index.js"></script>
 </head>
 <body>
-  <textarea id='source' placeholder='Put unicode string here'>
-  </textarea>
-  <textarea id='result'>
-  </textarea>
+  <div id="app" v-cloak>
+    <h1>Unicode String Decoder</h1>
+    <el-row>
+      <el-col :span="24">
+        <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Put unicode text here" v-model="text"></el-input>
+      </el-col>
+    </el-row>
+    <el-row v-if="decodedText.length > 0">
+
+      <el-col :span="24">
+        <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="decodedText"></el-input>
+      </el-col>
+    </el-row>
+  </div>
   <script>
-    const source = document.getElementById('source');
-    const result = document.getElementById('result');
-    
-    source.addEventListener('input', () => {
-      try {
-        const {value} = source;
-        const decoded = decodeURIComponent(value.replace(/\\x/g, '%'));
-        result.value = decoded;
-      } catch (e) {console.log(e)}
+    new Vue({
+      el: '#app',
+      data: {
+        text: '',
+        previouiseDecodedText: '',
+      },
+      computed: {
+        decodedText() {
+          const {text} = this;
+          let decodedText = this.previouiseDecodedText;
+          try {
+            decodedText = decodeURIComponent(text.replace(/\\x/g, '%'));
+          } catch(e) {
+            text;
+          }
+          return this.previouiseDecodedText = decodedText;
+        },
+      },
     });
   </script>
 </body>
