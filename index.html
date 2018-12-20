@@ -16,6 +16,9 @@
   <div id="app" v-cloak>
     <h1>Unicode String Decoder</h1>
     <el-row>
+      <p>\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e'</p> のような文字をデコードする簡単なツール
+    </el-row>
+    <el-row>
       <el-col :span="24">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Put unicode text here" v-model="text"></el-input>
       </el-col>
