@@ -16,17 +16,20 @@
   <div id="app" v-cloak>
     <h1>Unicode String Decoder</h1>
     <el-row>
-      <p>'\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e' のような文字をデコードする簡単なUtility tool</p>
+      <p>'\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e' のような文字をデコードする簡単なUtility Tool</p>
     </el-row>
     <el-row>
-      <el-col :span="24">
+      <el-col :span="18" :offset="2">
         <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="Put unicode text here" v-model="text"></el-input>
       </el-col>
     </el-row>
-    <el-row v-if="decodedText.length > 0">
-
-      <el-col :span="24">
+    <el-row v-if="text.length > 0">
+      <el-col :span="18" :offset="2">
         <el-input type="textarea" :autosize="{minRows: 2, maxRows: 4}" v-model="decodedText"></el-input>
+      </el-col>
+      <el-col :span="2">
+        <span v-if="isError" style="color: red"><i class="el-icon-error"></i></span>
+        <span v-else style="color: green"><i class="el-icon-success"></i></span>
       </el-col>
     </el-row>
   </div>
@@ -35,18 +38,18 @@
       el: '#app',
       data: {
         text: '',
-        previouiseDecodedText: '',
+        decodedText: '',
+        isError: false,
       },
-      computed: {
-        decodedText() {
-          const {text} = this;
-          let decodedText = this.previouiseDecodedText;
+      watch: {
+        text(value) {
           try {
-            decodedText = decodeURIComponent(text.replace(/\\x/g, '%'));
-          } catch(e) {
-            text;
+            this.decodedText = decodeURIComponent(this.text.replace(/\\x/g, '%'));
+            this.isError = false;
+          } catch (e) {
+            console.error(e);
+            this.isError = true;
           }
-          return this.previouiseDecodedText = decodedText;
         },
       },
     });
