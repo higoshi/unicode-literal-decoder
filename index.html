@@ -20,7 +20,7 @@
     const source = document.getElementById('source');
     const result = document.getElementById('result');
     
-    source.addEventListener('change', () => {
+    source.addEventListener('input', () => {
       try {
         const {value} = source;
         const decoded = decodeURIComponent(value.replace('\\x', '%'));
