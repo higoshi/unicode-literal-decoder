@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <textarea id='source' place>
+  <textarea id='source' placeholder='Put unicode string here'>
   </textarea>
   <textarea id='result'>
   </textarea>
@@ -25,7 +25,7 @@
         const {value} = source;
         const decoded = decodeURIComponent(value.replace('\\x', '%'));
         result.value = decoded;
-      } catch (e) {}
+      } catch (e) {console.log(e)}
     });
   </script>
 </body>
