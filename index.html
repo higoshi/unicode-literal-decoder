@@ -23,7 +23,7 @@
     source.addEventListener('input', () => {
       try {
         const {value} = source;
-        const decoded = decodeURIComponent(value.replace('\\x', '%'));
+        const decoded = decodeURIComponent(value.replace(/\\x/g, '%'));
         result.value = decoded;
       } catch (e) {console.log(e)}
     });
