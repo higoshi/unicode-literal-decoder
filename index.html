@@ -12,12 +12,20 @@
   </style>
 </head>
 <body>
-  <textarea id='source' placeholder='Put unicode string here'>
+  <textarea id='source' place>
   </textarea>
   <textarea id='result'>
   </textarea>
   <script>
     const source = document.getElementById('source');
     const result = document.getElementById('result');
+    
+    source.addEventListener('change', () => {
+      try {
+        const {value} = source;
+        const decoded = decodeURIComponent(value.replace('\\x', '%'));
+        result.value = decoded;
+      } catch (e) {}
+    });
   </script>
 </body>
